@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;); margin-bottom: 15px" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home-index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'publications-type' publication.type_publication.slug %}">{{ publication.type_publication.name }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ publication.title }}</li>
+  </ol>
+</nav>
+
+<div class="col-1"></div>
+<div class="col-7">
+    <div class="row">
+
+        <!-- Infornações da publicação -->
+        <table>
+            <!-- Título -->
+            <tr>
+                <td><h6 class="title-publication">Título:</h6></td>
+                <td><h6 class="text-publication">{{ publication.title }}</h6></td>
+            </tr>
+
+            <!-- Subtítulo -->
+            <tr>
+                <td><h6 class="title-publication">Subtítulo:</h6></td>
+                <td><h6 class="text-publication">{{ publication.subtitle }}</h6></td>
+            </tr>
+
+            <!-- Resumo -->
+            {% if publication.resume %}
+            <tr>
+                <td><h6 class="title-publication">Resumo:</h6></td>
+                <td><h6 class="text-publication">{{ publication.resume }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- Abstract -->
+            {% if publication.abstract %}
+            <tr>
+                <td><h6 class="title-publication">Abstract:</h6></td>
+                <td><h6 class="text-publication">{{ publication.abstract }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- 1º Orientador -->
+            {% if publication.first_advisor %}
+            <tr>
+                <td><h6 class="title-publication">Primeiro orientador:</h6></td>
+                <td><h6 class="text-publication">{{ publication.first_advisor }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- 1º Orientador -->
+            {% if publication.second_advisor %}
+            <tr>
+                <td><h6 class="title-publication">Segundo orientador:</h6></td>
+                <td><h6 class="text-publication">{{ publication.second_advisor }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- Palavras-chave -->
+            {% if publication.keywords %}
+            <tr>
+                <td><h6 class="title-publication">Palavras-chave:</h6></td>
+                <td><h6 class="text-publication">{{ publication.keywords }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- CNPq -->
+            {% if publication.cnpq %}
+            <tr>
+                <td><h6 class="title-publication">CNPq:</h6></td>
+                <td><h6 class="text-publication">{{ publication.cnpq }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- Idioma -->
+            {% if publication.language %}
+            <tr>
+                <td><h6 class="title-publication">Idioma:</h6></td>
+                <td><h6 class="text-publication">{{ publication.language }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- País -->
+            {% if publication.country %}
+            <tr>
+                <td><h6 class="title-publication">País:</h6></td>
+                <td><h6 class="text-publication">{{ publication.country }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- Editor -->
+            {% if publication.editor %}
+            <tr>
+                <td><h6 class="title-publication">Editor:</h6></td>
+                <td><h6 class="text-publication">{{ publication.editor }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- Sigla Instituição -->
+            {% if publication.initials_institution %}
+            <tr>
+                <td><h6 class="title-publication">Sigla da instituição:</h6></td>
+                <td><h6 class="text-publication">{{ publication.initials_institution }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- Citação -->
+            {% if publication.quote %}
+            <tr>
+                <td><h6 class="title-publication">Citação:</h6></td>
+                <td><h6 class="text-publication">{{ publication.quote }}</h6></td>
+            </tr>
+            {% endif %}
+
+            <!-- Data documento -->
+            {% if publication.date_document %}
+            <tr>
+                <td><h6 class="title-publication">Data do documento:</h6></td>
+                <td><h6 class="text-publication">{{ publication.date_document|date:"d M Y" }}</h6></td>
+            </tr>
+            {% endif %}
+
+        </table>
+
+    </div>
+</div>
+
+<div class="col-3">
+    <div class="col-12 content-side-publication">
+        {% if publication.author %}
+        <h6 class="title-side-publication">Autor(es):</h6>
+        {% for author in publication.author.all %}
+        <a class="text-side-publication" href="{% url 'profile-author-public' author.slug %}">
+            {% if forloop.counter|divisibleby:2 %}<br>{% else %}{% endif %}
+            {{ author.full_name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.updated_at %}
+        <h6 class="title-side-publication">Data da publicação:</h6>
+
+        <h6 style="font-size: 16px;">
+            {{ publication.updated_at }}
+        </h6>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.categories %}
+        <h6 class="title-side-publication">Arquivo(s) associado(s):</h6>
+        {% for category in publication.categories.all %}
+        <a href="{% url 'publications-category' category.slug %}" class="btn btn-sm button-side-publication">
+            <i class="far fa-file"></i> {{ category.name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.categories %}
+        <h6 class="title-side-publication">Categoria(s):</h6>
+        {% for category in publication.categories.all %}
+        <a href="{% url 'publications-category' category.slug %}" class="btn btn-sm button-side-publication">
+            {{ category.name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.knowledge_area %}
+        <h6 class="title-side-publication">Área de conhecimento:</h6>
+        <a href="{% url 'publications-knowledge' publication.knowledge_area.slug %}"
+           class="btn btn-sm button-side-publication">
+            {{ publication.knowledge_area.name }}
+        </a>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.type_publication %}
+        <h6 class="title-side-publication">Tipo de publicação:</h6>
+        <a href="{% url 'publications-type' publication.type_publication.slug %}"
+           class="btn btn-sm button-side-publication">
+            {{ publication.type_publication.name }}
+        </a>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.type_access %}
+        <h6 class="title-side-publication">Tipo de acesso:</h6>
+        <a href="{% url 'publications-access' publication.type_access.slug %}" class="btn btn-sm button-side-publication">
+            {{ publication.type_access.name }}
+        </a>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.tags %}
+        <h6 class="title-side-publication">Tag(s):</h6>
+        {% for tag in publication.tags.all %}
+        <a href="{% url 'publications-tag' tag.slug %}" class="btn btn-sm button-side-publication">
+            {{ tag.name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+<div class="col-1"></div>
+
+
+{% endblock content %}
+

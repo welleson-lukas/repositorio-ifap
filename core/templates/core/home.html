@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'parciais/search.html' %}
+<div class="col-12">
+    <div class="row" style="margin-top: 40px; margin-bottom: 30px">
+
+        <!--                <h5 style="margin-bottom: 40px"><i class="fas fa-heart"></i> Mais lidos</h5>-->
+        <h5 style="margin-bottom: 40px"><i class="fas fa-fire-alt"></i> Mais recentes</h5>
+
+        {% if publications %}
+        {% for publication in publications %}
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <!--<img src="https://source.unsplash.com/random/700x400" class="card-img-top" alt="...">-->
+                <div class="card-body">
+
+                    <p style="margin-bottom: 0.5rem" class="card-subtitle">
+                        {% for category in publication.categories.all %}
+                        <a href="{% url 'publications-category' category.slug %}" class="btn btn-sm button-categories">{{category}}</a>
+                        {% endfor %}
+                    </p>
+
+                    <h4 style="margin-bottom: 1rem" class="card-title">
+                        <a class="title-h6" href="{% url 'view-publication' publication.slug %}">{{ publication.title }}</a>
+                    </h4>
+
+                    <h6 class="text-author-date" style="font-size: 11px">
+                        {% for author in publication.author.all %}
+                            <a style="font-size: 16px" href="{% url 'profile-author-public' author.slug %}">
+                                {% if forloop.counter|divisibleby:2 %}<br>{% else %}{% endif %}{{ author.user.first_name }} {{ author.user.last_name }}
+                            </a>
+                        {% endfor %}
+                        <br>
+                        <p style="padding-top: 5px">{{ publication.updated_at|date:"d M Y" }}</p>
+                    </h6>
+
+                    {% if publication.type_publication.slug == "post" %}
+                        <a href="{% url 'publications-type' publication.type_publication.slug %}" class="btn btn-sm button-categories"
+                           style="background-color: #b8cddb;">{{publication.type_publication.name}}</a>
+                    {% else %}
+                        <a href="{% url 'publications-type' publication.type_publication.slug %}" class="btn btn-sm button-categories"
+                       style="background-color: #b8cddb;">{{publication.type_publication.name}}</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock content %}

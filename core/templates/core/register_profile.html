@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4>{{request.user.username}}</h4>
+{{form_user}}
+{{form_author}}
+{% endblock content %}

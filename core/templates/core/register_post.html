@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.media}}
+    {{form}}
+    <button type="submit" class="btn btn-success btn-sm">
+        Salvar
+    </button>
+
+    <a class="btn btn-danger btn-sm" href="" role="button">
+        Cancelar
+    </a>
+
+</form>
+
+{% endblock content %}

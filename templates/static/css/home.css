@@ -1,0 +1,11 @@
+.button-categories {
+    border-radius: 50px;
+    font-size: 14px;
+    background-color: #caefc8;
+    color: #000000;
+}
+
+.button-categories:hover {
+    color: #0a58ca;
+    text-decoration: underline #0a58ca;
+}

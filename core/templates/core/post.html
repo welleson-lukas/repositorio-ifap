@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;); margin-bottom: 15px"
+     aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home-index' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'publications-type' publication.type_publication.slug %}">
+            {{ publication.type_publication.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ publication.title }}</li>
+    </ol>
+</nav>
+
+<div class="col-1"></div>
+<div class="col-7">
+    <div class="row">
+        <!-- Infornações da publicação -->
+        <h6 class="title-h6" style="font-size: 46px">{{ publication.title }}</h6>
+        <p>{{ publication.excerpt }}</p>
+
+        <hr>
+
+        <div style="font-size: 16px" class="content-post">
+            {{ publication.content|safe }}
+        </div>
+
+    </div>
+</div>
+
+<div class="col-3">
+    <div class="col-12 content-side-publication">
+        {% if publication.author %}
+        <h6 class="title-side-publication">Autor(es):</h6>
+        {% for author in publication.author.all %}
+        <a class="text-side-publication" href="{% url 'profile-author-public' author.slug %}">
+            {% if forloop.counter|divisibleby:2 %}<br>{% else %}{% endif %}
+            {{ author.full_name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.updated_at %}
+        <h6 class="title-side-publication">Data da publicação:</h6>
+
+        <h6 style="font-size: 16px;">
+            {{ publication.updated_at }}
+        </h6>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if files %}
+        <h6 class="title-side-publication">Arquivo(s) associado(s):</h6>
+        {% for file in files %}
+        <a href="{{ file.file.url }}" target="_blank" class="btn btn-sm button-side-publication">
+            <i class="far fa-file"></i> {{ file.title }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.categories %}
+        <h6 class="title-side-publication">Categoria(s):</h6>
+        {% for category in publication.categories.all %}
+        <a href="{% url 'publications-category' category.slug %}" class="btn btn-sm button-side-publication">
+            {{ category.name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.knowledge_area %}
+        <h6 class="title-side-publication">Área de conhecimento:</h6>
+        <a href="{% url 'publications-knowledge' publication.knowledge_area.slug %}"
+           class="btn btn-sm button-side-publication">
+            {{ publication.knowledge_area.name }}
+        </a>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.type_publication %}
+        <h6 class="title-side-publication">Tipo de publicação:</h6>
+        <a href="{% url 'publications-type' publication.type_publication.slug %}"
+           class="btn btn-sm button-side-publication">
+            {{ publication.type_publication.name }}
+        </a>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.type_access %}
+        <h6 class="title-side-publication">Tipo de acesso:</h6>
+        <a href="{% url 'publications-access' publication.type_access.slug %}" class="btn btn-sm button-side-publication">
+            {{ publication.type_access.name }}
+        </a>
+
+        {% endif %}
+    </div>
+
+    <div class="col-12 content-side-publication">
+        {% if publication.tags %}
+        <h6 class="title-side-publication">Tag(s):</h6>
+        {% for tag in publication.tags.all %}
+        <a href="{% url 'publications-tag' tag.slug %}" class="btn btn-sm button-side-publication">
+            {{ tag.name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+<div class="col-1"></div>
+
+{% endblock content %}

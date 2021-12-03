@@ -1,0 +1,31 @@
+@font-face {
+    font-family: Charter_Regular;
+    src: url(../fonts/Charter-Regular.ttf);
+}
+
+@font-face {
+    font-family: Charter_Bold;
+    src: url(../fonts/Charter-Bold.ttf);
+}
+
+body {
+    font-family: Charter_Regular;
+}
+
+.title-h6 {
+    font-family: Charter_Bold;
+}
+
+p {
+    font-family: Charter_Regular;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0a58ca;
+    text-decoration: underline #0a58ca;
+}
